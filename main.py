@@ -64,12 +64,12 @@ def generate_rag_response(user_query, context):
         # Sending the request to Cerebras API
         print("\nSending request to Cerebras...")
         response = client.chat.completions.create(
-            messages=[
+            messages=[ 
                 {"role": "system", "content": "You are a helpful assistant for document analysis."},
                 {"role": "user", "content": f"Document content: {context}"},
                 {"role": "user", "content": f"Question: {user_query}"}
             ],
-            model="llama3.1-8b"  # Change the model if required
+            model="llama3.3-70b"  # Change the model if required
         )
 
         # Check if the response contains choices and extract the message content
@@ -82,9 +82,6 @@ def generate_rag_response(user_query, context):
     except Exception as e:
         print(f"Error generating response: {e}")
         return None
-
-
-
 
 # Main Function with Combined Context and Dynamic Retrieval
 def main():
@@ -104,7 +101,7 @@ def main():
         content = ""
         if input_file.endswith(".pdf"):
             content = read_pdf(input_file)  # Extract text from PDF
-        elif input_file.endswith(('.png', '.jpg', '.jpeg')):
+        elif input_file.endswith(('.png', '.jpg', '.jpeg')): 
             content = extract_text_with_ocr(input_file)  # Extract text from image
         else:
             print(f"Unsupported file format: {input_file}")
